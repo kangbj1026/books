@@ -1,0 +1,56 @@
+server:
+  port: ${API_CONFIG.PORT}
+  servlet:
+    application-display-name: ${DB_CONFIG.DATABASE}
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  datasource:
+    url: ${DB_CONFIG.URL}
+    username: ${DB_CONFIG.USERNAME}
+    password: ${DB_CONFIG.PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: none
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  servlet:
+    multipart:
+      max-file-size: 300MB
+      max-request-size: 300MB
+  thymeleaf:
+    suffix: .html
+    cache: false
+  profiles:
+    active: local # 기본 활성화 프로파일 local 설정
+
+jasypt:
+  encryptor:
+    bean: jasyptEncryptorAES
+
+---
+spring:
+  config:
+    activate:
+      on-profile: was1
+
+server:
+  port: ${API_CONFIG.PORT1}
+---
+spring:
+  config:
+    activate:
+      on-profile: was2
+
+server:
+  port: ${API_CONFIG.PORT2}

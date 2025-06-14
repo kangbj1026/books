@@ -1,0 +1,54 @@
+<!-- Header -->
+<div th:replace="~{adm/fragments/header}"></div>
+<!-- START CONTENT -->
+<div class="content">
+	<!-- Start CONTAINER -->
+	<div class="container-padding">
+
+		<!-- Start Row -->
+		<div class="row">
+			<!-- Start Panel -->
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-title">
+						Book Create
+					</div>
+
+					<div class="panel-body">
+						<div class="book-div">
+							<h4>새 도서 등록</h4>
+
+							<label for="title">제목</label>
+							<input id="title" name="title" type="text" required>
+
+							<label for="author">저자</label>
+							<input id="author" name="author" type="text" required>
+
+							<label for="description">내용</label>
+							<textarea id="description" name="description" rows="5" required></textarea>
+
+							<label for="price">가격</label>
+							<input id="price" name="price" type="number" min="0" required>
+
+							<label for="stockQuantity">재고</label>
+							<input id="stockQuantity" name="stockQuantity" type="number" min="0" required>
+
+							<label for="isbn">바코드 번호 (ISBN)</label>
+							<input id="isbn" name="isbn" type="text" required>
+
+							<button onclick="books()">등록</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!-- END Panel -->
+		</div>
+		<!-- End Row -->
+	</div>
+	<!-- End CONTAINER -->
+</div>
+<!-- END CONTENT -->
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+<script src="/tableData/api/books/booksFunction.js"></script>
+<div th:replace="~{adm/fragments/footer}"></div>

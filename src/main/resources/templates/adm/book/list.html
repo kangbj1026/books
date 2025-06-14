@@ -1,0 +1,239 @@
+<!-- Header -->
+<div th:replace="~{adm/fragments/header}"></div>
+<style>
+
+	.search-row {
+		display: flex;
+	}
+	.form-group {
+		margin-bottom: 1rem;
+	}
+	.form-control {
+		padding: .5rem .5rem;
+	}
+	.col-md-2 , .col-md-3 {
+		padding-right: 20px;
+	}
+	select {
+		word-wrap: normal;
+	}
+	option {
+		padding: 8px;
+		background-color: #fff;
+		color: #333;
+	}
+
+	#page {
+		display: block;
+	}
+	.pagination-info {
+		margin-bottom: 15px;
+		color: #666;
+	}
+	.pagination {
+		justify-content: center;
+		margin-top: 20px;
+		display: -ms-flexbox;
+		display: flex;
+		padding-left: 0;
+		list-style: none;
+		border-radius: .25rem;
+	}
+	.page-item.active .page-link {
+		color: #fff;
+		background-color: #007bff;
+		border-color: #007bff;
+	}
+
+	.btn-delete {
+		color: white;
+		background-color: #dc3545;
+		padding: 5px 12px;
+		border-radius: 6px;
+		text-decoration: none;
+		font-weight: bold;
+		font-size: 0.9rem;
+		display: inline-block;
+		transition: background-color 0.3s ease;
+	}
+	.btn-delete:hover {
+		background-color: #a71d2a;
+	}
+</style>
+<!-- START CONTENT -->
+<div class="content">
+	<!-- Start CONTAINER -->
+	<div class="container-padding">
+
+		<!-- 검색 폼 -->
+		<div class="search-form">
+			<form th:action="@{/book}" method="get">
+				<div class="search-row">
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="searchType">검색 타입:</label>
+							<select name="searchType" id="searchType" class="form-control" th:value="${searchParameter.searchType}">
+								<option value="">전체</option>
+								<option value="title" th:selected="${searchParameter.searchType == 'title'}">제목</option>
+								<option value="author" th:selected="${searchParameter.searchType == 'author'}">저자</option>
+								<option value="isbn" th:selected="${searchParameter.searchType == 'isbn'}">ISBN</option>
+								<option value="description" th:selected="${searchParameter.searchType == 'description'}">설명</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="searchValue">검색어:</label>
+							<input type="text" name="searchValue" id="searchValue" class="form-control"
+								   th:value="${searchParameter.searchValue}" placeholder="검색어를 입력하세요">
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="startAt">시작일:</label>
+							<input type="date" name="startAt" id="startAt" class="form-control"
+								   th:value="${searchParameter.startAt}">
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="endAt">종료일:</label>
+							<input type="date" name="endAt" id="endAt" class="form-control"
+								   th:value="${searchParameter.endAt}">
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="limit">페이지당 개수:</label>
+							<select name="limit" id="limit" class="form-control" th:value="${searchParameter.limit}">
+								<option value="10" th:selected="${searchParameter.limit == 10}">10개</option>
+								<option value="20" th:selected="${searchParameter.limit == 20}">20개</option>
+								<option value="50" th:selected="${searchParameter.limit == 50}">50개</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row mt-2">
+					<div class="col-md-12">
+						<button type="submit" class="btn btn-primary">검색</button>
+						<button type="button" class="btn btn-secondary ml-2" onclick="clearSearch()">초기화</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<!-- Start Row -->
+		<div class="row">
+			<!-- Start Panel -->
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-title">
+						Book List
+					</div>
+					<div class="panel-body">
+
+						<!-- 페이징 정보 표시 -->
+						<div class="pagination-info">
+							<span>총 <strong th:text="${books.totalCount}">0</strong>개의 항목 중
+								  <strong th:text="${books.currentPage}">1</strong> / <strong th:text="${books.totalPages}">1</strong> 페이지</span>
+						</div>
+
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead>
+								<tr>
+									<th>번호</th>
+									<th>제목</th>
+									<th>저자</th>
+									<th>가격</th>
+									<th>재고 수량</th>
+									<th>ISBN</th>
+									<th>등록일</th>
+									<th>비고</th>
+								</tr>
+								</thead>
+								<tbody id="tableList">
+								<tr th:each="book, iterStat : ${books.items}">
+									<td th:text="${books.totalCount - (books.currentPage - 1) * searchParameter.limit - iterStat.index}">1</td>
+									<td>
+										<a th:text="${book.title}" th:href="@{/book}+'/'+${book.booksUID}"></a>
+									</td>
+									<td th:text="${book.author}">저자</td>
+									<td th:text="${#numbers.formatInteger(book.price, 0, 'COMMA') + '원'}">가격</td>
+									<td th:text="${book.stockQuantity + '권'}">재고</td>
+									<td th:text="${book.isbn}">ISBN</td>
+									<td th:text="${#temporals.format(book.createdAt, 'yyyy-MM-dd')}">등록일</td>
+									<td>
+										<a href="#" class="btn-delete" onclick="deleteBook(this.dataset.bookId)" th:data-book-id="${book.booksUID}">삭제 </a>
+									</td>
+								</tr>
+								<tr th:if="${#lists.isEmpty(books.items)}">
+									<td colspan="7" class="text-center">데이터가 없습니다.</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<!-- 페이징 네비게이션 -->
+						<nav id="page" aria-label="Page navigation" th:if="${books.totalPages > 1}">
+							<ul class="pagination">
+								<!-- 첫 페이지로 -->
+								<li class="page-item" th:classappend="${!hasPrevious} ? 'disabled'">
+									<a class="page-link" th:href="@{/book(page=1, limit=${searchParameter.limit}, searchType=${searchParameter.searchType}, searchValue=${searchParameter.searchValue})}"
+									   th:if="${hasPrevious}">
+										&laquo;&laquo;
+									</a>
+									<span class="page-link" th:unless="${hasPrevious}">&laquo;&laquo;</span>
+								</li>
+
+								<!-- 이전 페이지 -->
+								<li class="page-item" th:classappend="${!hasPrevious} ? 'disabled'">
+									<a class="page-link" th:href="@{/book(page=${books.currentPage - 1}, limit=${searchParameter.limit}, searchType=${searchParameter.searchType}, searchValue=${searchParameter.searchValue})}"
+									   th:if="${hasPrevious}">
+										&laquo;
+									</a>
+									<span class="page-link" th:unless="${hasPrevious}">&laquo;</span>
+								</li>
+
+								<!-- 페이지 번호들 -->
+								<li class="page-item" th:each="pageNum : ${#numbers.sequence(startPage, endPage)}"
+									th:classappend="${pageNum == books.currentPage} ? 'active'">
+									<a class="page-link" th:href="@{/book(page=${pageNum}, limit=${searchParameter.limit}, searchType=${searchParameter.searchType}, searchValue=${searchParameter.searchValue})}"
+									   th:text="${pageNum}"
+									   th:if="${pageNum != books.currentPage}">1</a>
+									<span class="page-link" th:if="${pageNum == books.currentPage}" th:text="${pageNum}">1</span>
+								</li>
+
+								<!-- 다음 페이지 -->
+								<li class="page-item" th:classappend="${!hasNext} ? 'disabled'">
+									<a class="page-link" th:href="@{/book(page=${books.currentPage + 1}, limit=${searchParameter.limit}, searchType=${searchParameter.searchType}, searchValue=${searchParameter.searchValue})}"
+									   th:if="${hasNext}">
+										&raquo;
+									</a>
+									<span class="page-link" th:unless="${hasNext}">&raquo;</span>
+								</li>
+
+								<!-- 마지막 페이지로 -->
+								<li class="page-item" th:classappend="${!hasNext} ? 'disabled'">
+									<a class="page-link" th:href="@{/book(page=${books.totalPages}, limit=${searchParameter.limit}, searchType=${searchParameter.searchType}, searchValue=${searchParameter.searchValue})}"
+									   th:if="${hasNext}">
+										&raquo;&raquo;
+									</a>
+									<span class="page-link" th:unless="${hasNext}">&raquo;&raquo;</span>
+								</li>
+							</ul>
+						</nav>
+
+					</div>
+				</div>
+			</div>
+			<!-- END Panel -->
+		</div>
+		<!-- End Row -->
+	</div>
+	<!-- End CONTAINER -->
+</div>
+<!-- END CONTENT -->
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+<script src="/tableData/api/books/booksFunction.js"></script>
+<div th:replace="~{adm/fragments/footer}"></div>

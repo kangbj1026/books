@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+	<title>Admin</title>
+
+	<!-- ========== Css Files ========== -->
+	<link href="/css/style.css" rel="stylesheet">
+	<link href="/css/books.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<h1>header Area</h1>
+	</header>
+
+	<nav id="navbar"></nav>
+	<div class="fullwidth">
+
+		<div>
+			<div class="animation-header tertiary">
+				<div class="dd-l-plate animation-container">
+					<div class="animation-colors">
+						<div class="animation-yellow animation-color"></div>
+						<div class="animation-pink-one animation-color"></div>
+						<div class="animation-pink-two animation-color"></div>
+						<div class="animation-blue animation-color"></div>
+					</div>
+					<div class="dd-image"></div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<script>
+		const table = "/book";
+		const links = [
+			{ href: table, text: 'list' },
+			{ href: table+'/create', text: 'create' },
+		];
+		function createNavbar()
+		{
+			const nav = document.getElementById('navbar');
+			links.forEach( link => { const newLink = document.createElement('a');
+				newLink.href = link.href;
+				newLink.textContent = link.text;
+				nav.appendChild(newLink);
+			});
+		}
+
+		createNavbar();
+	</script>
+</body>

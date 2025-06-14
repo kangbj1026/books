@@ -1,0 +1,106 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.4'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.books'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    //	Java 파일 생성을 위한 라이브러리
+    implementation 'com.squareup:javapoet:1.13.0'
+
+    // Spring Boot Starter Dependencies
+    // ============================
+    // Spring Boot starter dependencies provide core functionality for building applications. 스프링 부트 애플리케이션의 핵심 기능을 제공하는 시작자 의존성을 선언합니다.
+    // These starters simplify dependency management and configuration. 이 시작자는 의존성 관리와 설정을 간소화하여 개발을 용이하게 합니다.
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // JWT (JSON Web Token)
+    // ===================
+    // Used for secure authentication and information exchange. 보안 인증 및 정보 교환을 위한 안전한 방법으로 사용됩니다.
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+
+    // Development Tools
+    // =================
+    // Used for development purposes only. 개발 목적으로만 사용되는 도구들을 선언합니다.
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // Database Connection
+    // ===================
+    // MySQL JDBC driver for database connectivity. MySQL JDBC 드라이버를 통해 데이터베이스와 연결할 수 있게 해줍니다.
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation group: 'com.oracle.database.jdbc', name: 'ojdbc8', version: '19.8.0.0'
+
+    // Annotation Processors
+    // ====================
+    // Used for annotation processing during compilation. 컴파일 시점에 어노테이션 처리를 위해 필요한 프로세서들을 선언합니다.
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // Testing Dependencies
+    // ===================
+    // Used for unit testing and integration testing. 단위 테스트와 통합 테스트를 위한 의존성을 선언합니다.
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // JUnit
+    // ===================
+    // 플랫폼 런처 테스트용 의존성
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // QueryDSL
+    // ========
+    // Object-relational mapping library for querying databases. 데이터베이스 쿼리를 객체 지향 방식으로 작성하고 실행할 수 있게 해주는 라이브러리입니다.
+    implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
+    implementation "com.querydsl:querydsl-core"
+    implementation "com.querydsl:querydsl-collections"
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta" // querydsl JPAAnnotationProcessor 사용 지정
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api" // java.lang.NoClassDefFoundError (javax.annotation.Generated) 대응 코드
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api" // java.lang.NoClassDefFoundError (javax.annotation.Entity) 대응 코드
+
+    // AWS Integration , s3
+    // ===============
+    // Spring Cloud starter for AWS integration. AWS 클라우드 서비스와 통합할 수 있게 해주는 Spring Cloud starter입니다.
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+    // Cryptography
+    // ============
+    // Used for encrypting sensitive data at rest. 민감한 데이터를 안전하게 저장할 때 사용되는 암호화 라이브러리입니다.
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
+
+    // 엑셀 처리를 위한 Apache POI 라이브러리
+    implementation 'org.apache.poi:poi:4.1.2'
+    implementation 'org.apache.poi:poi-ooxml:4.1.2'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

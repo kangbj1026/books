@@ -1,0 +1,47 @@
+.book-div {
+    padding: 30px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px #0003;
+    max-width: 400px;
+    margin: 0 auto;
+    font-family:'Helvetica Neue', Arial, sans-serif;
+}
+.book-div h4 {
+    margin-bottom: 24px;
+    color: #333;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: center;
+}
+.book-div label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+}
+.book-div input,
+.book-div textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+.book-div button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+.book-div button:hover {
+    background: #0056b3;
+}

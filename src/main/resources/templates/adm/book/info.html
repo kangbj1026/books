@@ -1,0 +1,111 @@
+<!-- Header -->
+<div th:replace="~{adm/fragments/header}"></div>
+<style>
+    .book-detail {
+        padding: 30px;
+        background: #f9f9f9;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px #0003;
+        max-width: 400px;
+        margin: 0 auto;
+        font-family:'Helvetica Neue', Arial, sans-serif;
+    }
+    .book-detail h4 {
+        margin-bottom: 24px;
+        color: #333;
+        font-size: 1.4rem;
+        font-weight: bold;
+        text-align: center;
+    }
+    .book-detail .item {
+        margin-bottom: 20px;
+    }
+    .book-detail .item label {
+        display: block;
+        margin-bottom: 8px;
+        color: #555;
+        font-weight: 500;
+    }
+    .book-detail .item p {
+        margin: 0;
+        padding: 10px;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        color: #333;
+    }
+	.item-isbn {
+        text-align: center;
+	}
+</style>
+<!-- START CONTENT -->
+<div class="content">
+	<!-- Start CONTAINER -->
+	<div class="container-padding">
+
+		<!-- Start Row -->
+		<div class="row">
+			<!-- Start Panel -->
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-title">
+						Book Info
+					</div>
+					<div class="panel-body">
+						<div class="book-div">
+							<h4>도서 상세 정보</h4>
+
+							<label for="title">제목</label>
+							<input id="title" name="title" type="text" th:value="${book.title}">
+
+							<label for="author">저자</label>
+							<input id="author" name="author" type="text" th:value="${book.author}">
+
+							<label for="description">내용</label>
+							<textarea id="description" name="description" rows="5" th:text="${book.description}"></textarea>
+
+							<label for="price">가격</label>
+							<input id="price" name="price" type="number" min="0" th:value="${book.price}">
+
+							<label for="stockQuantity">재고</label>
+							<input id="stockQuantity" name="stockQuantity" type="number" min="0" th:value="${book.stockQuantity}">
+
+							<div class="item item-isbn">
+								<label>바코드 (ISBN)</label>
+								<svg id="barcode"></svg>
+								<span id="barcode-text" th:text="${book.isbn}" style="display: none;"></span>
+								<input id="isbn" name="isbn" type="hidden" min="0" th:value="${book.isbn}">
+							</div>
+
+							<button th:onclick="booksUpdate([[${book.booksUID}]])">수정</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!-- END Panel -->
+		</div>
+		<!-- End Row -->
+	</div>
+	<!-- End CONTAINER -->
+</div>
+<!-- END CONTENT -->
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const isbn = document.querySelector("#barcode-text").innerText.trim();
+
+        if (isbn) {
+            JsBarcode("#barcode", isbn, {
+                format: "CODE128",
+                lineColor: "#000",
+                width: 2,
+                height: 100,
+                displayValue: true
+            });
+        }
+    });
+</script>
+<script src="/tableData/api/books/booksFunction.js"></script>
+<div th:replace="~{adm/fragments/footer}"></div>
