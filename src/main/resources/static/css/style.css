@@ -22,10 +22,10 @@ footer {
 button {
     margin-top: 10px;
     /*background-color: #bea2d3; */
-    background-image: linear-gradient(to right, #0090f7, #ba62fc, #f2416b);
+    /*background-image: linear-gradient(to right, #0090f7, #ba62fc, #f2416b);*/
     border: none;
     border-radius: 8px;
-    color: #ffffff;
+    color: #000000;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
@@ -208,8 +208,8 @@ hr {
     border-collapse: collapse;
 }
 .table thead th {
-    background-image: linear-gradient(to right, #86cdff, #b85aff, #ff6489);
-    color: white;
+    /*background-image: linear-gradient(to right, #86cdff, #b85aff, #ff6489);*/
+    color: black;
     padding: 10px;
     border: 1px solid #ddd;
 }

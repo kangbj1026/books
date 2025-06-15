@@ -1,3 +1,61 @@
+.search-row {
+    display: flex;
+}
+.form-group {
+    margin-bottom: 1rem;
+}
+.form-control {
+    padding: .5rem .5rem;
+}
+.col-md-2 , .col-md-3 {
+    padding-right: 20px;
+}
+select {
+    word-wrap: normal;
+}
+option {
+    padding: 8px;
+    background-color: #fff;
+    color: #333;
+}
+
+#page {
+    display: block;
+}
+.pagination-info {
+    margin-bottom: 15px;
+    color: #666;
+}
+.pagination {
+    justify-content: center;
+    margin-top: 20px;
+    display: -ms-flexbox;
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: .25rem;
+}
+.page-item.active .page-link {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-delete {
+    color: white;
+    background-color: #dc3545;
+    padding: 5px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+.btn-delete:hover {
+    background-color: #a71d2a;
+}
+
 .book-div {
     padding: 30px;
     background: #f9f9f9;
