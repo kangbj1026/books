@@ -1,4 +1,3 @@
-# books
 # Books Management API
 
 Spring Boot 기반의 도서 관리 RESTful API입니다. 도서의 CRUD(Create, Read, Update, Delete) 기능을 제공합니다.
@@ -460,10 +459,6 @@ curl -X POST "http://localhost:1029/api/v1/books" \
 3. **빌드 오류**
     - Java 버전 확인: `java -version`
     - Maven 버전 확인: `./mvnw -version`
-
-## 📝 라이선스
-
-MIT License
 
 ## 👨‍💻 개발자 정보
 
